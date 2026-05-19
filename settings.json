@@ -1,0 +1,8 @@
+{
+  "editor.inlineSuggest.enabled": false,
+  "editor.quickSuggestions": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.parameterHints.enabled": false,
+  "chat.disableAIFeatures": true,
+  "editor.quickSuggestionsDelay": 999999999
+}

@@ -7,7 +7,7 @@ const Header = ({header}) => {
 const Content = ({parts}) => {
   return(
     <div>
-      {parts.map( part => <li key={part.id}>{part.name} {part.exercises}</li>)}
+      {parts.map( part => <p key={part.id}>{part.name} {part.exercises}</p>)}
       <Total parts = {parts} />
     </div>
   )
