@@ -1,16 +1,23 @@
+  import personsService from '../services/personsService'
+
   const PersonsForm =({newName, newNumber,setNewName, setNewNumber, persons, setPersons}) => {
   const addPerson = (event) => {
     event.preventDefault()
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: String(persons.length +1)
+      id: String(persons.length +1),
+      importance: true
     }
     const exists = persons.some(person => person.name === newPerson.name)
       
     if(!exists) setPersons(persons.concat(newPerson))
     else alert(`${newName} is already added to phonebook`)
     console.log('button clicked', newName, newPerson.id)
+    personsService.create().then('http://localhost:3001/persons', newPerson)
+    .then(response => {
+      console.log("New Person added to db", response)
+    })
   }
 
   const handleNameChange = (event) => {

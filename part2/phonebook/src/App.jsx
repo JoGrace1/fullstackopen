@@ -1,20 +1,37 @@
-import { useState } from 'react'
 import Filter from './components/Filter'
 import PersonsForm from './components/PersonsForm'
 import Person from './components/Person'
 import AllPersons from './components/AllPersons'
+import { useState, useEffect } from 'react'
+import personsService from './services/personsService'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' ,number: '12345678', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]) 
+
   const [newName, setNewName] = useState("")
   const [newNumber, setNewNumber] = useState("")
   const [newFilter, setFilter] = useState("")
+  const [notes, setNotes] = useState([])
   const [filteredPersons, setFilteredPersons] = useState([])
+  const [persons, setPersons] = useState([])
+  const [important, setImportant] = useState(true)
+
+  const toggleDeletePerson = (id) => {
+      console.log('importance of ' + id + ' needs to be toggled')
+      const person = persons.find(p => p.id === id)
+      console.log("Person ID", person)
+      personsService.remove(id).then(()=>{setPersons(persons.filter(person => person.id !== id))})
+  }
+
+  useEffect(() => {
+    console.log('effect')
+    personsService.getAll().then(initialPersons => {
+      setPersons(initialPersons)
+      console.log("intitial Persons", initialPersons)
+    })
+
+  }, [])
+  console.log('render', persons.length, 'notes')
+  console.log('response: ', persons)
 
   return (
     <div>
@@ -34,12 +51,15 @@ const App = () => {
         persons = {persons}
         setPersons = {setPersons}
       />
+      
       <AllPersons
         persons= {persons}
+        toggleDeletePerson = {toggleDeletePerson}
       />
       {filteredPersons.length >0 ?  
       <Person 
         filteredPersons = {filteredPersons}
+        toggleDeletePerson = {toggleDeletePerson}
       /> : 
       <></>
       }

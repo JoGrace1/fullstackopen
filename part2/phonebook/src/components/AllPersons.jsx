@@ -1,9 +1,12 @@
-const AllPersons =({persons}) => {
+const AllPersons =({persons, toggleDeletePerson}) => {
     return (
         <>
         <h2>Numbers</h2>
             {persons.map(person => 
-                <div key={person.id}>{person.name} {person.number}</div>
+                <div key={person.id}>
+                    <div >{person.name} {person.number}</div>
+                    <button onClick={toggleDeletePerson}>Delete</button>
+                </div>
             )}
         </>
     )
