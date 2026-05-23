@@ -13,7 +13,6 @@ const App = () => {
   const [notes, setNotes] = useState([])
   const [filteredPersons, setFilteredPersons] = useState([])
   const [persons, setPersons] = useState([])
-  const [important, setImportant] = useState(true)
 
   const toggleDeletePerson = (id) => {
       console.log('importance of ' + id + ' needs to be toggled')
@@ -35,7 +34,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       <Filter 
         persons = {persons}
         setFilter = {setFilter}
