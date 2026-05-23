@@ -5,7 +5,7 @@ const AllPersons =({persons, toggleDeletePerson}) => {
             {persons.map(person => 
                 <div key={person.id}>
                     <div >{person.name} {person.number}</div>
-                    <button onClick={toggleDeletePerson}>Delete</button>
+                    <button onClick={() => toggleDeletePerson(person.id)}>Delete</button>
                 </div>
             )}
         </>

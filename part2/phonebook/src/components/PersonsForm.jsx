@@ -10,8 +10,7 @@
       const newPerson = {
         name: newName,
         number: newNumber,
-        id: String(persons.length +1),
-        importance: true
+        id: String(persons.length +1)
       }
     const exists = persons.some(person => person.name === newPerson.name)
       

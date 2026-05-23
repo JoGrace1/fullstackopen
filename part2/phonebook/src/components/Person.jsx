@@ -5,13 +5,12 @@ const Person = ({filteredPersons, toggleDeletePerson}) => {
             <h3>Filtered People</h3>
             {filteredPersons.map(person => 
                 <div key={person.id}>
-                <div key={person.id}>{person.name} {person.number}</div>
-                <button onClick={toggleDeletePerson}>Delete</button>
+                <div >{person.name} {person.number}</div>
+                    <button onClick={() => toggleDeletePerson(person.id)}>Delete</button>
                 </div>
             )}
         </div>
     )
-
 }
 
 export default Person
