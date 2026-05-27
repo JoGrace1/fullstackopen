@@ -18,7 +18,7 @@ const App = () => {
       console.log('importance of ' + id + ' needs to be toggled')
       const person = persons.find(p => p.id === id)
       console.log("Person ID", person)
-      personsService.remove(id).then(()=>{setPersons(persons.filter(person => person.id !== id))})
+      //personsService.remove(id).then(()=>{setPersons(persons.filter(person => person.id !== id))})
   }
 
   useEffect(() => {

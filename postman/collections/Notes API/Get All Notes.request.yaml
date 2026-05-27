@@ -1,0 +1,26 @@
+$kind: http-request
+name: Get All Notes
+method: GET
+url: '{{baseUrl}}/api/notes'
+order: 2000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response is a JSON array", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.be.an('array');
+      });
+
+      pm.test("Each note has id, content, and important fields", function () {
+          const json = pm.response.json();
+          json.forEach(function (note) {
+              pm.expect(note).to.have.property('id');
+              pm.expect(note).to.have.property('content');
+              pm.expect(note).to.have.property('important');
+          });
+      });
