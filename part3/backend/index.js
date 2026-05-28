@@ -5,6 +5,7 @@ var morgan = require('morgan')
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use(express.static('dist'))
 app.use(morgan('tiny'))
 let persons = [
     { 
@@ -88,6 +89,7 @@ app.delete('/api/persons/:id', (request, response) => {
   persons = persons.filter(p => p.id !== id)
   response.status(204).end()
 })
-const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
