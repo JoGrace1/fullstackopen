@@ -1,0 +1,26 @@
+$kind: http-request
+name: Get All Notes
+url: "{{baseUrl}}/api/persons/id"
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response is a JSON array", function () {
+          const json = pm.response.json();
+          pm.expect(json).to.be.an('array');
+      });
+
+      pm.test("Each note has id, content, and important fields", function () {
+          const json = pm.response.json();
+          json.forEach(function (note) {
+              pm.expect(note).to.have.property('id');
+              pm.expect(note).to.have.property('content');
+              pm.expect(note).to.have.property('important');
+          });
+      });
+    language: text/javascript
+order: 612609987943065

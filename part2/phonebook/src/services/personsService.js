@@ -3,6 +3,12 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/persons'
 
 const getAll = () => {
+  // return axios.get(baseUrl)
+  // .then(response => response.data)
+  // .catch(error => {
+  //   console.error('Error all person:', error)
+  //   throw error
+  // })
   const request = axios.get(baseUrl)
   console.log('promise fulfilled')
   return request
