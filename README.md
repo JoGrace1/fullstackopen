@@ -13,3 +13,7 @@ npm run dev
 Only Link: https://fullstackopen-2-x8lx.onrender.com/
 
 node --watch index.js
+
+ESlint
+npx eslint index.js
+npm run lint

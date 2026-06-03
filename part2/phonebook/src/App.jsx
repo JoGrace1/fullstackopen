@@ -29,8 +29,8 @@ const App = () => {
     })
 
   }, [])
-  console.log('render', persons.length, 'notes')
-  console.log('response: ', persons)
+  //console.log('render', persons.length, 'notes')
+  //console.log('response: ', persons)
 
   return (
     <div>
