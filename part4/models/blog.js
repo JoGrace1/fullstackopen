@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const logger = require('../utils/logger')
+const config = require('../utils/config')
 
 const app = express()
 
@@ -11,11 +13,15 @@ const blogSchema = mongoose.Schema({
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
-const mongoUrl = process.env.MONGODB_URI
-console.log("url ", mongoUrl)
-//const mongoUrl = `mongodb+srv://joananoack_db_user:${password}@cluster0.g5kmgc9.mongodb.net/?appName=Cluster0`
 
-mongoose.connect(mongoUrl, { family: 4 })
+mongoose
+  .connect(config.MONGODB_URI, { family: 4 })
+  .then(() => {
+    logger.info('connected to MongoDB')
+  })
+  .catch((error) => {
+    logger.error('error connection to MongoDB:', error.message)
+  })
 
 app.use(express.json())
 
@@ -39,3 +45,4 @@ app.listen(PORT, () => {
 })
 
 module.exports = mongoose.model('Blogs', blogSchema)
+
