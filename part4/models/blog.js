@@ -44,5 +44,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-module.exports = mongoose.model('Blogs', blogSchema)
-
+module.exports = mongoose.model('Blog', blogSchema)

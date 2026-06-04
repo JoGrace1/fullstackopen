@@ -5,6 +5,7 @@ const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 // const notesRouter = require('./controllers/notes')
 const Blog = require('./models/blog')
+const blogsRouter = require('./controllers/blogs')
 
 const app = express()
 
@@ -12,12 +13,12 @@ logger.info('connecting to', config.MONGODB_URI)
 
 app.use(express.static('dist'))
 app.use(express.json())
-
-app.get('/api/blogs', (request, response) => {
-    Blog.find({}).then(post =>
-        response.json(post)
-    )
-})
+app.use('/api/blogs', blogsRouter)
+// app.get('/api/blogs', (request, response) => {
+//     Blog.find({}).then(post =>
+//         response.json(post)
+//     )
+// })
 app.use(middleware.requestLogger)
 
 //app.use('/api/blogs', notesRouter)
