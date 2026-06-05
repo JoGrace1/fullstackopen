@@ -1,9 +1,4 @@
-const express = require('express')
 const mongoose = require('mongoose')
-const logger = require('../utils/logger')
-const config = require('../utils/config')
-
-const app = express()
 
 const blogSchema = mongoose.Schema({
   title: String,
@@ -20,15 +15,4 @@ blogSchema.set('toJSON', {
 })
 const Blog = mongoose.model('Blog', blogSchema)
 
-mongoose
-  .connect(config.MONGODB_URI, { family: 4 })
-  .then(() => {
-    logger.info('connected to MongoDB')
-  })
-  .catch((error) => {
-    logger.error('error connection to MongoDB:', error.message)
-  })
-
-app.use(express.json())
-
-module.exports = mongoose.model('Blog', blogSchema)
+module.exports = Blog

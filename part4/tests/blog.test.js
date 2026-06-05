@@ -1,11 +1,21 @@
-const {test, describe, after, beforeEach, forEach} = require('node:test')
+const {test, describe, after, before, beforeEach} = require('node:test')
 const listHelper = require('../utils/list_helper')
 const assert = require('node:assert')
 const supertest = require('supertest')
 const app = require('../app.js')
 const Blog = require('../models/blog')
+const config = require('../utils/config')
 const api = supertest(app)
+
 const mongoose = require('mongoose')
+
+before(async () => {
+  await mongoose.connect(config.MONGODB_URI, { family: 4 })
+})
+
+after(async () => {
+  await mongoose.connection.close()
+})
 
 describe("api test", () => {
     const initialBlog = [
@@ -59,14 +69,28 @@ describe("api test", () => {
         assert.strictEqual(blog._id, undefined)
       })
     })
-    after(async () => {
-      await mongoose.connection.close()
+})
+describe("add new Blog post", () => {
+    const newPost= {
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+      likes: 5
+    }
+
+    test("is the new blog post added  ", async () => {
+        const result = await api
+        .post('/api/blogs')
+        .send(newPost)
+        .expect(201)
+        console.log(result.body)
+        assert.strictEqual(result.body.title, newPost.title)
     })
 })
+
 describe("blog return", () => {
     test("test the result ",() => {
         const blogs = []
-
         const result = listHelper.dummy(blogs)
         assert.strictEqual(result, 1)
     })

@@ -7,8 +7,13 @@ blogsRouter.get('/', async (request, response) => {
     
 })
 blogsRouter.post('/', async (request, response) => {
-  const blog = new Blog(request.body)
-  const result = await blog.save()
-  response.status(201).json(result)
+  try {
+    const blog = new Blog(request.body)
+    const result = await blog.save()
+    response.status(201).json(result)
+  } catch (error) {
+    console.log('🔥 POST ERROR:', error.message)
+    response.status(500).json({ error: error.message })
+  }
 })
 module.exports = blogsRouter
