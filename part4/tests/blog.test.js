@@ -1,7 +1,57 @@
 const {test, describe} = require('node:test')
 const listHelper = require('../utils/list_helper')
 const assert = require('node:assert')
+const supertest = require('supertest')
+const app = require('../app.js')
+const Blog = require('../models/blog')
+const api = supertest(app)
 
+describe("api test", () => {
+    const initialBlog = [
+        {
+        _id: '5a422aa71b54a676234d17f8',
+        title: 'Go To Statement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+        likes: 5,
+        __v: 0
+        },{
+        _id: '5a422aa71b54a676234d17f8',
+        title: 'Go To Statement Considered Harmful',
+        author: 'Elvina Musk',
+        url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+        likes: 7,
+        __v: 0
+        },{
+        _id: '5a422aa71b54a676234d17f8',
+        title: 'Freedom Figther',
+        author: 'Steffi ',
+        url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+        likes: 10,
+        __v: 0
+        }
+    ]
+    beforeEach(async () => {
+      await Blog.deleteMany({})
+      let noteObject = new Blog(initialBlog[0])
+      await noteObject.save()
+      noteObject = new Blog(initialBlog[1])
+      await noteObject.save()
+    })
+    test("test the api get functionality",async () =>{
+        await api
+        .get('/api/blogs')
+        .expect(201)
+        .expect('Content-Type','/application\/json/')
+    })
+    test('all blog posts are returned', async() =>{
+      const response = api.get('/api/blogs')
+      assert.strictEqual(response.body.length, initialBlog.length)
+    })
+    after(async () => {
+      await mongoose.connection.close()
+    })
+})
 describe("blog return", () => {
     test("test the result ",() => {
         const blogs = []
