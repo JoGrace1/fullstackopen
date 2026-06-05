@@ -1,4 +1,4 @@
-const {test, describe, after, beforeEach} = require('node:test')
+const {test, describe, after, beforeEach, forEach} = require('node:test')
 const listHelper = require('../utils/list_helper')
 const assert = require('node:assert')
 const supertest = require('supertest')
@@ -50,6 +50,14 @@ describe("api test", () => {
     test('all blog posts are returned', async() =>{
       const response = await api.get('/api/blogs')
       assert.strictEqual(response.body.length, initialBlog.length)
+    })
+    test("if _id changed to id",async ()=>{
+      const response = await api.get('/api/blogs')
+      const blogs = response.body
+      blogs.forEach(blog =>{
+        assert.ok(blog.id)
+        assert.strictEqual(blog._id, undefined)
+      })
     })
     after(async () => {
       await mongoose.connection.close()
