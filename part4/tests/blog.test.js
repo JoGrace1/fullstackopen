@@ -42,6 +42,17 @@ describe("api test", () => {
         __v: 0
         }
     ]
+    const emptyLike= {
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf'
+    }
+    test("if like empty",async ()=>{
+      const result = await api.post('/api/blogs')
+      .send(emptyLike)
+      .expect(201)
+      assert.strictEqual(result.body.likes, 0)
+    })
     beforeEach(async () => {
       await Blog.deleteMany({})
       let noteObject = new Blog(initialBlog[0])
