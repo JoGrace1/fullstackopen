@@ -80,6 +80,28 @@ describe("api test", () => {
         assert.strictEqual(blog._id, undefined)
       })
     })
+    const titleMissing = {
+      author: 'Edsger W. Dijkstra',
+      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+      likes: 5
+    }
+    const urlMissing = {
+      author: 'Edsger W. Dijkstra',
+      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+      likes: 5
+    }
+    test('title missing', async()=>{
+      const response = await api.post('/api/blogs')
+      .send(titleMissing)
+      .expect(400)
+
+    })
+     test('url missing', async()=>{
+      const response = await api.post('/api/blogs')
+      .send(urlMissing)
+      .expect(400)
+
+    })
 })
 describe("add new Blog post", () => {
     const newPost= {
