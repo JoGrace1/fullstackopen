@@ -16,8 +16,35 @@ blogsRouter.post('/', async (request, response) => {
     const result = await blog.save()
     response.status(201).json(result)
   } catch (error) {
-    console.log('🔥 POST ERROR:', error.message)
     response.status(500).json({ error: error.message })
+  }
+})
+blogsRouter.delete('/:id', async(request, response) =>{
+  try {
+    const blogId = await Blog.findByIdAndDelete(request.params.id)
+    if (blogId) response.status(204).end()
+    else response.status(404).end()
+  } catch (error){
+    response.status(500).json({error: error.message})
+  }
+})
+blogsRouter.put('/:id', async (request, response) =>{
+    try {
+    const blog = await Blog.findById(request.params.id)
+
+    if (!blog) {
+      return response.status(404).json({ error: 'blog not found' })
+    }
+
+    blog.url = request.body.url
+    blog.title = request.body.title
+    blog.author = request.body.author
+
+    const updatedBlog = await blog.save()
+
+    response.status(200).json(updatedBlog)
+  } catch (error) {
+    response.status(400).json({ error: error.message })
   }
 })
 module.exports = blogsRouter

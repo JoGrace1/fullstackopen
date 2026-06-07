@@ -100,7 +100,6 @@ describe("api test", () => {
       const response = await api.post('/api/blogs')
       .send(urlMissing)
       .expect(400)
-
     })
 })
 describe("add new Blog post", () => {

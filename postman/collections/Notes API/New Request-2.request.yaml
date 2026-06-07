@@ -1,0 +1,8 @@
+$kind: http-request
+name: New Request
+url: http://localhost:3003/api/blogs/6a235f815bee8cff2bf03651
+method: DELETE
+body:
+  type: json
+  content: ""
+order: 4384269155971444
