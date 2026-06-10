@@ -1,0 +1,13 @@
+$kind: http-request
+name: New Request
+url: http://localhost:3003/api/blogs
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "title": "My seventh blog",
+      "author": "Steffi ",
+      "url": "https://example.com"
+    }
+order: 4376201269971203
