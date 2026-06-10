@@ -40,3 +40,41 @@ describe('when there is initially one user in db', () => {
     assert(usernames.includes(newUser.username))
   })
 })
+describe('test user data', () => {
+    test('creation fails if username is too short', async () => {
+    const user = {
+        username: 'ab',
+        name: 'Test User',
+        password: 'secret'
+    }
+
+    await api
+        .post('/api/users')
+        .send(user)
+        .expect(400)
+    })
+    test('creation fails if password is too short', async () => {
+    const user = {
+        username: 'testuser',
+        name: 'Test User',
+        password: 'ab'
+    }
+
+    await api
+        .post('/api/users')
+        .send(user)
+        .expect(400)
+    })
+    test('creation fails if username already exists', async () => {
+    const user = {
+        username: 'root',
+        name: 'Duplicate',
+        password: 'secret'
+    }
+
+    await api
+        .post('/api/users')
+        .send(user)
+        .expect(400)
+    })
+})
